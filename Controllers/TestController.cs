@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using React.Entity;
 using React.Repository.Interfaces;
@@ -15,6 +16,7 @@ namespace React.Controllers
         this._repository = repo;
     }
 
+    [Authorize]
     [HttpGet]
     public ActionResult get(){
         return Ok("Test message from server");
