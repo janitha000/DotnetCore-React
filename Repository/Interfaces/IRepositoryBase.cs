@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using React.Entity;
 
-namespace React.Repository
+namespace React.Repository.Interfaces
 {
     public interface IRepositryBase<T> where T : class, IEntitybase , new()
     {

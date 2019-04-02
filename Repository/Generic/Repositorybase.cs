@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using React.Entity;
 using React.Repository.Context;
+using React.Repository.Interfaces;
 
 namespace React.Repository.Generic
 {
