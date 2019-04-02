@@ -25,6 +25,11 @@ namespace React.Repository.Generic
             _context.Set<T>().Add(entity);
         }
 
+        public virtual void Commit()
+        {
+            _context.SaveChanges();
+        }
+
         public virtual void Delete(T entity)
         {
             EntityEntry dbEntityEntry = _context.Entry<T>(entity);
