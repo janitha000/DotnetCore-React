@@ -6,11 +6,11 @@ using React.Entity;
 namespace React.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthenticationController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private IAuthenticationService _authService;
 
-        public AuthenticationController(IAuthenticationService service)
+        public AuthController(IAuthenticationService service)
         {
             this._authService = service;
         }
@@ -23,9 +23,10 @@ namespace React.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Signin()
+        public async Task<ActionResult<string>> Signin(User user)
         {
-             return Ok("Token");
+             string id = await this._authService.Signin(user);
+             return Ok(id);
         }
     }
 }

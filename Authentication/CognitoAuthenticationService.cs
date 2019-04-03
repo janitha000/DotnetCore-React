@@ -18,23 +18,37 @@ namespace React.Authentication
             var request = new SignUpRequest
             {
                 ClientId = _clientId,
-                Password = user.Password,
-                Username = user.Name
+                Password = "janitha",
+                Username = "Janitha"
             };
 
             var emailAttribute = new AttributeType
             {
                 Name = "email",
-                Value = user.Email
+                Value = "janithat@99x.lk"
             };
 
             request.UserAttributes.Add(emailAttribute);
             var response = await cognito.SignUpAsync(request);
         }
 
-        public string Signin(User user)
+        public async Task<string> Signin(User user)
         {
-            throw new System.NotImplementedException();
+            var cognito = new AmazonCognitoIdentityProviderClient(_region);
+            var request = new AdminInitiateAuthRequest
+            {
+                UserPoolId = "us-east-1_fEiQUmfRQ",
+                ClientId = _clientId,
+                AuthFlow = AuthFlowType.ADMIN_NO_SRP_AUTH
+            };
+
+            request.AuthParameters.Add("USERNAME", "janitha");
+            request.AuthParameters.Add("PASSWORD", "janitha");
+
+            var response = await cognito.AdminInitiateAuthAsync(request);
+
+            return response.AuthenticationResult.IdToken;
+
         }
     }
 }
