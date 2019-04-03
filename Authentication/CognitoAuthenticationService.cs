@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Amazon;
 using Amazon.CognitoIdentityProvider;
@@ -35,6 +36,7 @@ namespace React.Authentication
         public async Task<string> Signin(User user)
         {
             var cognito = new AmazonCognitoIdentityProviderClient(_region);
+
             var request = new AdminInitiateAuthRequest
             {
                 UserPoolId = "us-east-1_fEiQUmfRQ",
@@ -42,12 +44,12 @@ namespace React.Authentication
                 AuthFlow = AuthFlowType.ADMIN_NO_SRP_AUTH
             };
 
-            request.AuthParameters.Add("USERNAME", "Janitha");
-            request.AuthParameters.Add("PASSWORD", "janitha");
+        request.AuthParameters.Add("USERNAME", "Janitha");
+        request.AuthParameters.Add("PASSWORD", "janitha");
 
-            var response = await cognito.AdminInitiateAuthAsync(request);
+        var response = await cognito.AdminInitiateAuthAsync(request);
 
-            return response.AuthenticationResult.IdToken;
+        return response.AuthenticationResult.IdToken;
 
         }
     }
