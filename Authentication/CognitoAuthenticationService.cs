@@ -42,7 +42,7 @@ namespace React.Authentication
                 AuthFlow = AuthFlowType.ADMIN_NO_SRP_AUTH
             };
 
-            request.AuthParameters.Add("USERNAME", "janitha");
+            request.AuthParameters.Add("USERNAME", "Janitha");
             request.AuthParameters.Add("PASSWORD", "janitha");
 
             var response = await cognito.AdminInitiateAuthAsync(request);
