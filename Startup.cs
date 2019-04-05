@@ -26,11 +26,15 @@ namespace React
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication("Bearer").AddJwtBearer(options => {
+            services.AddAuthentication("Bearer").AddJwtBearer(options =>
+            {
                 options.Audience = "e63r39b1umh8n55p5qhhn72t8";
                 options.Authority = "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_fEiQUmfRQ";
             });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()));
+
             services.AddDbContext<DatabaseContext>(context => { context.UseInMemoryDatabase("ReactLearner"); });
             //services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -56,7 +60,7 @@ namespace React
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            
+            app.UseCors("AllowAll");
             app.UseAuthentication();
             //app.UseHttpsRedirection();
             app.UseStaticFiles();

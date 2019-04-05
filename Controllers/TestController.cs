@@ -16,7 +16,6 @@ namespace React.Controllers
         this._repository = repo;
     }
 
-    [Authorize]
     [HttpGet]
     public ActionResult get(){
         return Ok("Test message from server");

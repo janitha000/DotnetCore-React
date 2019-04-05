@@ -4,22 +4,24 @@ export default class ApiData extends Component {
     state = { data: [] };
 
     componentDidMount() {
-        const url = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=Seona+Dancing&format=json&origin=*'
+        const url = 'http://localhost:5000/api/test'
 
-        fetch(url).then(result => result.json())
+        fetch(url)
+        .then(result => result.json())
             .then(result => {
-                this.setState({ data : result});
+                this.setState({ data: result });
             });
     }
 
     render() {
         const { data } = this.state;
 
-        const result = data.map((entry, index) => {
-            return <li key={index}>{entry}</li>
-        })
+        // const result = data.map((entry, index) => {
+        //     return <li key={index}>{entry}</li>
+        // })
 
-        return <ul>{result}</ul>
+        // return <ul>{result}</ul>
+        return <ul>{data}</ul>
     }
 }
 
