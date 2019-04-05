@@ -6,24 +6,7 @@ import Form from './components/Form';
 
 export default class Server extends React.Component {
     state = {
-        users: [
-            {
-                name: 'Charlie',
-                job: 'Janitor',
-            },
-            {
-                name: 'Mac',
-                job: 'Bouncer',
-            },
-            {
-                name: 'Dee',
-                job: 'Aspring actress',
-            },
-            {
-                name: 'Dennis',
-                job: 'Bartender',
-            },
-        ],
+        users: [],
     };
 
     removeUser = index => {
@@ -37,7 +20,7 @@ export default class Server extends React.Component {
     }
 
     handleSubmit = user => {
-        this.setState({ users : [this.state.users, user]});
+        this.setState({ users : [...this.state.users, user]});
     }
 
     render() {
