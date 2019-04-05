@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 
 import Table from './components/Table';
 import Form from './components/Form';
+import ApiData from './components/ApiData';
 
 export default class Server extends React.Component {
     state = {
@@ -32,7 +33,9 @@ export default class Server extends React.Component {
                 </div>,
                 <div className="container">
                     <Form handleSubmit ={this.handleSubmit} />
-                </div>
+                </div>,
+                <div className="container"><ApiData /></div>
+
 
             ]
 
