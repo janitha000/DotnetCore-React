@@ -1,34 +1,40 @@
 import React, { Component } from 'react'
 
 export default class Table extends Component {
-  render() {
+    render() {
+        const { userData , removeUser } = this.props;
+
+        return (
+            <table>
+                <TableHeader />
+                <TableBody userData={userData} removeUser = {removeUser}/>
+            </table>
+        )
+    }
+}
+
+const TableBody = props => {
+    const rows = props.userData.map((row, index) => {
+        return (
+            <tr key={index}>
+                <td>{row.name}</td>
+                <td>{row.job}</td>
+                <td><button onClick={() => props.removeUser(index)}>Delete</button></td>
+            </tr>
+        )
+    })
+
+    return <tbody>{rows}</tbody>
+
+}
+
+const TableHeader = () => {
     return (
-      <table>
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>Job</th>
-          </tr>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Charlie</td>
-            <td>Janitor</td>
-          </tr>
-          <tr>
-            <td>Mac</td>
-            <td>Bouncer</td>
-          </tr>
-          <tr>
-            <td>Dee</td>
-            <td>Aspiring actress</td>
-          </tr>
-          <tr>
-            <td>Dennis</td>
-            <td>Bartender</td>
-          </tr>
-        </tbody>
-      </table>
     )
-  }
 }
