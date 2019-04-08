@@ -6,6 +6,7 @@ import Form from './components/Form';
 import ApiData from './components/ApiData';
 
 import Signin from './components/Auth/Signin';
+import Register from './components/Auth/Register';
 
 export default class Server extends React.Component {
     state = {
@@ -38,7 +39,7 @@ export default class Server extends React.Component {
                 // </div>,
                 // <div className="container"><ApiData /></div>
 
-                <div className="container"><Signin /></div>
+                <div className="container"><Register /></div>
 
 
             ]

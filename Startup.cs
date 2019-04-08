@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +32,7 @@ namespace React
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()));
+            services.AddCors();
 
             //services.AddDbContext<DatabaseContext>(context => { context.UseInMemoryDatabase("ReactLearner"); });
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -60,11 +59,17 @@ namespace React
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            app.UseCors("AllowAll");
+
             app.UseAuthentication();
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseMvc(routes =>
             {

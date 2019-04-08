@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 
 export default class Register extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.initialState = {
             name: '',
             email: '',
-            password: '',
+            password : '',
         }
 
         this.state = this.initialState;
@@ -28,6 +28,13 @@ export default class Register extends Component {
         })
     }
 
+    handleChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value,
+        })
+    }
+
     render() {
         const { name, email, password } = this.state;
         return ([
@@ -37,18 +44,21 @@ export default class Register extends Component {
                     type="text"
                     name="name"
                     value={name}
+                    onChange={this.handleChange}
                 />
                 <label>Email</label>
                 <input
                     type="text"
                     name="email"
                     value={email}
+                    onChange={this.handleChange}
                 />
                 <label>Password</label>
                 <input
                     type="text"
                     name="password"
                     value={password}
+                    onChange={this.handleChange}
                 />
             </form>,
             <input type="button" value="Submit" onClick={this.submitForm} />
