@@ -15,22 +15,30 @@ namespace React.Authentication
 
         public async Task Register(User user)
         {
-            var cognito = new AmazonCognitoIdentityProviderClient(_region);
-            var request = new SignUpRequest
+            try
             {
-                ClientId = _clientId,
-                Password = "janitha",
-                Username = "Janitha"
-            };
+                var cognito = new AmazonCognitoIdentityProviderClient(_region);
+                var request = new SignUpRequest
+                {
+                    ClientId = _clientId,
+                    Password = user.Password,
+                    Username = user.Name
+                };
 
-            var emailAttribute = new AttributeType
+                var emailAttribute = new AttributeType
+                {
+                    Name = "email",
+                    Value = user.Email
+                };
+
+                request.UserAttributes.Add(emailAttribute);
+                var response = await cognito.SignUpAsync(request);
+            }
+            catch(Exception ex)
             {
-                Name = "email",
-                Value = "janithat@99x.lk"
-            };
 
-            request.UserAttributes.Add(emailAttribute);
-            var response = await cognito.SignUpAsync(request);
+            }
+
         }
 
         public async Task<string> Signin(User user)

@@ -23,6 +23,7 @@ namespace React.Repository.Generic
         {
             EntityEntry dbEntityEntry = _context.Entry<T>(entity);
             _context.Set<T>().Add(entity);
+            this.Commit();
         }
 
         public virtual void Commit()

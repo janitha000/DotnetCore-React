@@ -4,7 +4,6 @@ namespace React.Entity
 {
     public class User : IEntitybase
     {
-        [Required]
         [Key]
         public string Id { get; set; }
         [Required]
