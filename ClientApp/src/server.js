@@ -5,6 +5,8 @@ import Table from './components/Table';
 import Form from './components/Form';
 import ApiData from './components/ApiData';
 
+import Signin from './components/Auth/Signin';
+
 export default class Server extends React.Component {
     state = {
         users: [],
@@ -27,14 +29,16 @@ export default class Server extends React.Component {
     render() {
         return (
             [
-                <div className="container"><h1> Sample application</h1></div>,
-                <div className="container">
-                    <Table userData={this.state.users} removeUser={this.removeUser} />
-                </div>,
-                <div className="container">
-                    <Form handleSubmit ={this.handleSubmit} />
-                </div>,
-                <div className="container"><ApiData /></div>
+                // <div className="container"><h1> Sample application</h1></div>,
+                // <div className="container">
+                //     <Table userData={this.state.users} removeUser={this.removeUser} />
+                // </div>,
+                // <div className="container">
+                //     <Form handleSubmit ={this.handleSubmit} />
+                // </div>,
+                // <div className="container"><ApiData /></div>
+
+                <div className="container"><Signin /></div>
 
 
             ]
