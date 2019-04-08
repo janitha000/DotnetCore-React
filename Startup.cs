@@ -35,8 +35,8 @@ namespace React
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()));
 
-            services.AddDbContext<DatabaseContext>(context => { context.UseInMemoryDatabase("ReactLearner"); });
-            //services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<DatabaseContext>(context => { context.UseInMemoryDatabase("ReactLearner"); });
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthenticationService, CognitoAuthenticationService>();
