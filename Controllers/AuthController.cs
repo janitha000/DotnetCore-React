@@ -30,9 +30,18 @@ namespace React.Controllers
             try
             {
                 logger.LogDebug($"Called register endpoint with parameters {user.Name}, {user.Email}");
-                await this._authService.Register(user);
-                this._userRepository.Add(user);
-                return Ok("User Created");
+                bool registered = await this._authService.Register(user);
+                if (registered)
+                {
+                    this._userRepository.Add(user);
+                    return Ok("User Created");
+                }
+                else
+                {
+                    logger.LogWarning("User not registered");
+                    return BadRequest(user);
+                }
+                
             }
             catch(Exception ex)
             {

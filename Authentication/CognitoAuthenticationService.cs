@@ -25,7 +25,7 @@ namespace React.Authentication
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task Register(User user)
+        public async Task<bool> Register(User user)
         {
             try
             {
@@ -46,10 +46,15 @@ namespace React.Authentication
 
                 request.UserAttributes.Add(emailAttribute);
                 var response = await cognito.SignUpAsync(request);
+                if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
+                    return true;
+                else
+                    return false;
             }
             catch(Exception ex)
             {
                 _logger.LogError(ex, "Error when registering with Cognito");
+                return false;
             }
 
         }
