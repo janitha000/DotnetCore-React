@@ -11,13 +11,13 @@ namespace React.Authentication
 {
     public class CognitoAuthenticationService : IAuthenticationService
     {
-        private readonly ILogger _logger;
+        private readonly ILogger logger;
         private const string _clientId = "e63r39b1umh8n55p5qhhn72t8";
         private readonly RegionEndpoint _region = RegionEndpoint.USEast1;
 
         public CognitoAuthenticationService(ILogger<CognitoAuthenticationService> logger)
         {
-            this._logger = logger;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace React.Authentication
         {
             try
             {
-                _logger.LogDebug("Calling AWS cognito API");
+                logger.LogDebug("Calling AWS cognito API");
                 var cognito = new AmazonCognitoIdentityProviderClient(_region);
                 var request = new SignUpRequest
                 {
@@ -53,7 +53,7 @@ namespace React.Authentication
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, "Error when registering with Cognito");
+                logger.LogError(ex, "Error when registering with Cognito");
                 return false;
             }
 
@@ -69,7 +69,7 @@ namespace React.Authentication
         {
             try
             {
-                _logger.LogDebug("Calling AWS cognito API");
+                logger.LogDebug("Calling AWS cognito API");
                 var cognito = new AmazonCognitoIdentityProviderClient(_region);
 
                 var request = new AdminInitiateAuthRequest
@@ -79,16 +79,24 @@ namespace React.Authentication
                     AuthFlow = AuthFlowType.ADMIN_NO_SRP_AUTH
                 };
 
-                request.AuthParameters.Add("USERNAME", "Janitha");
-                request.AuthParameters.Add("PASSWORD", "janitha");
+                request.AuthParameters.Add("USERNAME", user.Name);
+                request.AuthParameters.Add("PASSWORD", user.Password);
 
                 var response = await cognito.AdminInitiateAuthAsync(request);
+                if(response.HttpStatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return response.AuthenticationResult.IdToken;
+                }
+                else
+                {
+                    logger.LogWarning("Login failed");
+                    return null;
+                }
 
-                return response.AuthenticationResult.IdToken;
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, "Error when sigin with Cognito");
+                logger.LogError(ex, "Error when sigin with Cognito");
                 return null;
             }
 
