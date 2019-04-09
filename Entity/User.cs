@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace React.Entity
 {
@@ -10,7 +11,7 @@ namespace React.Entity
         public string Name {get; set;}
         [Required]
         public string Email {get; set;}
-        [Required]
+        [NotMapped]
         public string Password {get; set;}
 
     }

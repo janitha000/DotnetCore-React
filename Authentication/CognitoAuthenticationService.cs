@@ -11,14 +11,25 @@ namespace React.Authentication
 {
     public class CognitoAuthenticationService : IAuthenticationService
     {
-        private ILogger logger;
+        private readonly ILogger _logger;
         private const string _clientId = "e63r39b1umh8n55p5qhhn72t8";
         private readonly RegionEndpoint _region = RegionEndpoint.USEast1;
 
+        public CognitoAuthenticationService(ILogger<CognitoAuthenticationService> logger)
+        {
+            this._logger = logger;
+        }
+
+        /// <summary>
+        /// Registering users in the AWS Cognito
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task Register(User user)
         {
             try
             {
+                _logger.LogDebug("Calling AWS cognito API");
                 var cognito = new AmazonCognitoIdentityProviderClient(_region);
                 var request = new SignUpRequest
                 {
@@ -38,15 +49,22 @@ namespace React.Authentication
             }
             catch(Exception ex)
             {
-
+                _logger.LogError(ex, "Error when registering with Cognito");
             }
 
         }
 
+        /// <summary>
+        /// Sigin to AWS Cognito and take the
+        /// Accesstoken
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<string> Signin(User user)
         {
             try
             {
+                _logger.LogDebug("Calling AWS cognito API");
                 var cognito = new AmazonCognitoIdentityProviderClient(_region);
 
                 var request = new AdminInitiateAuthRequest
@@ -65,6 +83,7 @@ namespace React.Authentication
             }
             catch(Exception ex)
             {
+                _logger.LogError(ex, "Error when sigin with Cognito");
                 return null;
             }
 

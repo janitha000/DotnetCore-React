@@ -1,5 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using React.Authentication.interfaces;
 using React.Entity;
 using React.Repository.Interfaces;
@@ -11,26 +13,31 @@ namespace React.Controllers
     {
         private IAuthenticationService _authService;
         private IUserRepository _userRepository;
+        private readonly ILogger logger;
 
-        public AuthController(IAuthenticationService service, IUserRepository repository)
+        public AuthController(IAuthenticationService service, IUserRepository repository, ILogger<AuthController> logger)
         {
             this._authService = service;
             this._userRepository = repository;
+            this.logger = logger;
         }
-
-        [HttpPost("test")]
-        public async Task<ActionResult<string>> Register(string user)
-        {
-            return Ok(user);
-        }
-
 
         [HttpPost("register")]
         public async Task<ActionResult<string>> Register([FromBody] User user)
         {
-            await this._authService.Register(user);
-            this._userRepository.Add(user);
-            return Ok();
+            try
+            {
+                logger.LogDebug($"Called register endpoint with parameters {user.Name}, {user.Email}");
+                await this._authService.Register(user);
+                this._userRepository.Add(user);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex, "Error when registering");
+                return 
+            }
+
         }
 
         [HttpPost("login")]
