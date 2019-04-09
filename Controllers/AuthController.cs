@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -30,12 +31,12 @@ namespace React.Controllers
                 logger.LogDebug($"Called register endpoint with parameters {user.Name}, {user.Email}");
                 await this._authService.Register(user);
                 this._userRepository.Add(user);
-                return Ok();
+                return Ok("User Created");
             }
             catch(Exception ex)
             {
                 logger.LogError(ex, "Error when registering");
-                return 
+                return null;
             }
 
         }
