@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using React.Authentication.interfaces;
 using React.Entity;
+using React.Error;
 using React.Repository.Interfaces;
 
 namespace React.Controllers
@@ -36,7 +37,7 @@ namespace React.Controllers
             catch(Exception ex)
             {
                 logger.LogError(ex, "Error when registering");
-                return null;
+                return Ok(new InternalServerApiError(ex));
             }
 
         }
