@@ -1,9 +1,11 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using React.Authentication.interfaces;
 using React.Entity;
+using React.Error;
 using React.Repository.Interfaces;
 
 namespace React.Controllers
@@ -30,12 +32,12 @@ namespace React.Controllers
                 logger.LogDebug($"Called register endpoint with parameters {user.Name}, {user.Email}");
                 await this._authService.Register(user);
                 this._userRepository.Add(user);
-                return Ok();
+                return Ok("User Created");
             }
             catch(Exception ex)
             {
                 logger.LogError(ex, "Error when registering");
-                return 
+                return Ok(new InternalServerApiError(ex));
             }
 
         }
