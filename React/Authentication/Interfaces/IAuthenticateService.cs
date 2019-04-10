@@ -7,6 +7,6 @@ namespace React.Authentication.interfaces
     public interface IAuthenticationService
     {
         Task<EndResult> Register(User user);
-        Task<string> Signin(User user);
+        Task<EndResult> Signin(User user);
     }
 }

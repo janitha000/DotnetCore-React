@@ -63,16 +63,16 @@ namespace React.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Signin([FromBody] User user)
+        public async Task<ActionResult<EndResult>> Signin([FromBody] User user)
         {
             try
             {
                 logger.LogDebug($"Called to login using parameters: {user.Name}");
-                string id = await this._authService.Signin(user);
-                if (id != null)
-                    return Ok(id);
+                EndResult result = await this._authService.Signin(user);
+                if (result.Status)
+                    return Ok(result.EndObject);
                 else
-                    return BadRequest("Login failed");
+                    return BadRequest(result.Message);
             }
             catch(Exception ex)
             {

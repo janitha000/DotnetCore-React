@@ -82,7 +82,7 @@ namespace React.Authentication
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<string> Signin(User user)
+        public async Task<EndResult> Signin(User user)
         {
             try
             {
@@ -100,23 +100,22 @@ namespace React.Authentication
                 request.AuthParameters.Add("PASSWORD", user.Password);
 
                 var response = await cognito.AdminInitiateAuthAsync(request);
-                if(response.HttpStatusCode == System.Net.HttpStatusCode.OK)
+                if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    return response.AuthenticationResult.IdToken;
+                    return new EndResult() { Status = true, EndObject = response.AuthenticationResult.IdToken };
                 }
                 else
                 {
                     logger.LogWarning("Login failed");
-                    return null;
+                    return new EndResult() { Status = false, Message = "Login failed" };
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.LogError(ex, "Error when sigin with Cognito");
-                return null;
+                return new EndResult() { Status = false, Message = $"Login failed: {ex.Message} , {ex.InnerException.Message}" };
             }
-
 
         }
 
