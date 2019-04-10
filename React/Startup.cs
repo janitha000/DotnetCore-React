@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using React.Authentication;
 using React.Authentication.interfaces;
+using React.Helpers;
 using React.Repository;
 using React.Repository.Context;
 using React.Repository.Interfaces;
@@ -40,6 +41,7 @@ namespace React
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthenticationService, CognitoAuthenticationService>();
+            services.AddScoped<IUserServiceHelper, UserServiceHelper>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

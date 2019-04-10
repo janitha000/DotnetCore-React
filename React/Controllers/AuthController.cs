@@ -4,6 +4,7 @@ using React.Authentication.interfaces;
 using React.Entity;
 using React.Error;
 using React.Repository.Interfaces;
+using React.Result;
 using System;
 using System.Threading.Tasks;
 
@@ -35,8 +36,8 @@ namespace React.Controllers
             try
             {
                 logger.LogDebug($"Called register endpoint with parameters {user.Name}, {user.Email}");
-                bool registered = await this._authService.Register(user);
-                if (registered)
+                EndResult registered = await this._authService.Register(user);
+                if (registered.Status)
                 {
                     this._userRepository.Add(user);
                     return Ok("User Created");
@@ -44,7 +45,7 @@ namespace React.Controllers
                 else
                 {
                     logger.LogWarning("User not registered");
-                    return BadRequest(user);
+                    return BadRequest(registered.Message);
                 }
 
             }
